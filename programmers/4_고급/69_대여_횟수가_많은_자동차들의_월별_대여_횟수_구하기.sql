@@ -1,0 +1,22 @@
+-- 대여 횟수가 많은 자동차들의 월별 대여 횟수 구하기
+-- 프로그래머스 고급 (⭐⭐⭐⭐)
+-- 문제 링크: https://school.programmers.co.kr/learn/courses/30/lessons/151139
+-- 작성자: 김하은
+-- 작성일: 2026. 01. 19. 23:56:26
+
+WITH RENTAL AS (
+    SELECT CAR_ID, START_DATE
+    FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY
+    WHERE START_DATE BETWEEN '2022-08-01' AND '2022-10-31')
+SELECT
+    MONTH(R.START_DATE) AS MONTH,
+    R.CAR_ID,
+    COUNT(*) AS RECORDS
+FROM RENTAL R
+GROUP BY MONTH(R.START_DATE), R.CAR_ID
+HAVING R.CAR_ID IN (
+    SELECT CAR_ID
+    FROM RENTAL
+    GROUP BY CAR_ID
+    HAVING COUNT(*) >= 5)
+ORDER BY MONTH ASC, R.CAR_ID DESC;
