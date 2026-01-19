@@ -1,0 +1,18 @@
+-- 저자 별 카테고리 별 매출액 집계하기
+-- 프로그래머스 고급 (⭐⭐⭐⭐)
+-- 문제 링크: https://school.programmers.co.kr/learn/courses/30/lessons/144856
+-- 작성자: 김하은
+-- 작성일: 2026. 01. 19. 23:56:10
+
+SELECT B.AUTHOR_ID,
+    A.AUTHOR_NAME,
+    B.CATEGORY,
+    SUM(S.SALES*B.PRICE) AS TOTAL_SALES
+FROM BOOK B
+JOIN AUTHOR A
+    ON B.AUTHOR_ID = A.AUTHOR_ID
+JOIN BOOK_SALES S
+    ON B.BOOK_ID = S.BOOK_ID
+WHERE S.SALES_DATE LIKE '2022-01%'
+GROUP BY B.AUTHOR_ID, A.AUTHOR_NAME, B.CATEGORY
+ORDER BY B.AUTHOR_ID ASC, B.CATEGORY DESC;
