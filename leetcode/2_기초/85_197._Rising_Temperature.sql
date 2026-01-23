@@ -6,7 +6,7 @@
 
 SELECT Id
 FROM (
-    SELECT id, temperature, LAG(temperature) 
+    SELECT id, temperature, LAG(temperature)  #LAG() : 이전 행 가져오는 윈도우 함수
 OVER (ORDER BY id) AS prev_temp
     FROM Weather
     ) as t
