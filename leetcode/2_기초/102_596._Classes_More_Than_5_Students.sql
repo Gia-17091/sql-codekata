@@ -4,7 +4,7 @@
 -- 작성자: 김하은
 -- 작성일: 2026. 01. 26. 09:42:42
 
-SELECT class
-FROM Courses
-GROUP BY class
-HAVING COUNT(class) >=5
+SELECT class
+FROM Courses
+GROUP BY class
+HAVING COUNT(class) >=5
