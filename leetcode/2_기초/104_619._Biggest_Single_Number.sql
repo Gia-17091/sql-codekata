@@ -4,12 +4,11 @@
 -- 작성자: 김하은
 -- 작성일: 2026. 01. 27. 08:44:21
 
-WHERE num IN (
-    SELECT num
-    FROM MyNumbers
-    GROUP BY num
-    HAVING count(num)=1
+SELECT MAX(num) AS num
+FROM MyNumbers
+WHERE num IN (
+    SELECT num
+    FROM MyNumbers
+    GROUP BY num
+    HAVING COUNT(num) = 1
 );
-SELECT MAX(num) as num
-FROM MyNumbers
-GROUP BY num
