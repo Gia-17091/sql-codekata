@@ -4,5 +4,6 @@
 -- 작성자: 김하은
 -- 작성일: 2026. 01. 30. 01:19:08
 
+#CEILING)는 올림을 하는 함수
 SELECT CEILING(AVG(Salary)- AVG(REPLACE(Salary,'0','')))
 FROM EMPLOYEES
