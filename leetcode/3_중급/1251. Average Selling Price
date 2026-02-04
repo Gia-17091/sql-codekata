@@ -1,0 +1,17 @@
+-- 1070. Product Sales Analysis III
+-- LeetCode 기초 (⭐⭐⭐)
+-- 문제 링크: https://leetcode.com/problems/product-sales-analysis-iii/submissions/1908337375/
+-- 작성자: 김하은
+-- 작성일: 2026. 02. 04 13:30
+
+SELECT product_id,
+       year AS first_year, 
+       quantity,
+       price
+FROM Sales
+WHERE (product_id, year) IN (
+    SELECT product_id,
+        min(YEAR)
+    FROM Sales
+    GROUP BY product_id
+)
