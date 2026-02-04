@@ -1,0 +1,16 @@
+-- 1789. Primary Department for Each Employee
+-- LeetCode 기초 (⭐⭐⭐)
+-- 문제 링크: https://leetcode.com/problems/primary-department-for-each-employee/submissions/1907447371/
+-- 작성자: 김하은
+-- 작성일: 2026. 02. 04. 13:03
+
+SELECT employee_id,
+    department_id
+FROM Employee 
+WHERE primary_flag = 'Y'
+    OR employee_id IN (
+        SELECT employee_id
+        FROM Employee
+        GROUP BY employee_id
+        HAVING COUNT(employee_id)=1
+    )
