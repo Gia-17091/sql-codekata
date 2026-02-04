@@ -1,0 +1,14 @@
+-- 1978. Employees Whose Manager Left the Company
+-- LeetCode 기초 (⭐⭐⭐)
+-- 문제 링크: https://leetcode.com/problems/employees-whose-manager-left-the-company/submissions/1908224496/
+-- 작성자: 김하은
+-- 작성일: 2026. 02. 05 02:18
+
+SELECT e1.employee_id 
+FROM Employees e1
+LEFT JOIN Employees e2
+    ON e1.manager_id=e2.employee_id 
+WHERE e1.salary < 30000
+    AND e1.manager_id IS NOT NULL
+    AND e2.employee_id IS NULL
+ORDER BY e1.employee_id
