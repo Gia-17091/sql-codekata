@@ -1,17 +1,21 @@
--- 1070. Product Sales Analysis III
+-- 1251. Average Selling Price
 -- LeetCode 기초 (⭐⭐⭐)
--- 문제 링크: https://leetcode.com/problems/product-sales-analysis-iii/
+-- 문제 링크: https://leetcode.com/problems/average-selling-price/description/
 -- 작성자: 김하은
--- 작성일: 2026. 02. 04 13:30
+-- 작성일: 2026. 02. 05. 03:54
 
-SELECT product_id,
-       year AS first_year, 
-       quantity,
-       price
-FROM Sales
-WHERE (product_id, year) IN (
-    SELECT product_id,
-        min(YEAR)
-    FROM Sales
-    GROUP BY product_id
-)
+SELECT p.product_id,
+ROUND(
+    IFNULL(SUM(p.price * u.units) / SUM(u.units), 0),
+    2
+) AS average_price
+FROM Prices p
+LEFT JOIN UnitsSold u
+    ON p.product_id = u.product_id
+    AND u.purchase_date between Start_date AND end_date
+GROUP BY p.product_id;
+
+#오류 발생
+#1.LEFT JOIN을 쓰고, WHERE 절에서 조건 걸기
+ #이런 경우, LEFT JOIN이 아닌! INNER JOIN으로 바뀐다.
+ #따라서 날짜 조건은 ON 절로 가야한다. [AND로 표기] 
