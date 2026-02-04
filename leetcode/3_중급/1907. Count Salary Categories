@@ -1,0 +1,48 @@
+-- 1907. Count Salary Categories
+-- LeetCode 기초 (⭐⭐⭐)
+-- 문제 링크: https://leetcode.com/problems/count-salary-categories/submissions/1908269228/
+-- 작성자: 김하은
+-- 작성일: 2026. 02. 05. 02:49
+
+#처음 제줄 방법
+SELECT
+    'Low Salary' As category,
+    COUNT(CASE WHEN income<20000 THEN 1 END) AS accounts_count
+FROM accounts
+
+UNION ALL
+
+SELECT
+    'Average Salary' AS category,
+    COUNT(CASE WHEN income BETWEEN 20000 AND 50000 THEN 1 END) AS accounts_count
+FROM accounts
+
+UNION ALL
+
+SELECT 
+    'High Salary' AS category,
+    COUNT(CASE WHEN income>50000 THEN 1 END) AS accounts_count
+FROM accounts
+
+#WITH문을 사용하고 싶어, 생각한 방법
+WITH CTE AS (
+    SELECT
+        CASE
+            WHEN income < 20000 THEN 'Low Salary'
+            WHEN income BETWEEN 20000 AND 50000 THEN 'Average Salary'
+            ELSE 'High Salary'
+        END AS category
+    FROM Accounts
+),
+category1 AS (
+    SELECT 'Low Salary' AS category
+    UNION ALL SELECT 'Average Salary'
+    UNION ALL SELECT 'High Salary'
+)
+SELECT
+    c.category,
+    COUNT(ct.category) AS accounts_count
+FROM category1 c
+LEFT JOIN CTE ct
+    ON c.category = ct.category
+GROUP BY c.category;
