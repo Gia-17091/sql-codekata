@@ -1,0 +1,26 @@
+-- 특정 기간동안 대여 가능한 자동차들의 대여비용 구하기
+-- 프로그래머스 심화 (⭐⭐⭐⭐⭐)
+-- 문제 링크: https://school.programmers.co.kr/learn/courses/30/lessons/157339
+-- 작성자: 김하은
+-- 작성일: 2026. 03. 28. 01:03:49
+
+SELECT 
+    C.CAR_ID,
+    C.CAR_TYPE,
+    FLOOR(C.DAILY_FEE * 30 * (100 - IFNULL(D.DISCOUNT_RATE, 0)) / 100) AS FEE
+FROM CAR_RENTAL_COMPANY_CAR C
+LEFT JOIN CAR_RENTAL_COMPANY_DISCOUNT_PLAN D
+    ON C.CAR_TYPE = D.CAR_TYPE
+    AND D.DURATION_TYPE = '30일 이상'
+WHERE C.CAR_TYPE IN ('세단', 'SUV')
+AND C.CAR_ID NOT IN (
+    SELECT CAR_ID
+    FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY
+    WHERE START_DATE <= '2022-11-30'
+      AND END_DATE >= '2022-11-01'
+)
+HAVING FEE >= 500000 AND FEE < 2000000
+ORDER BY 
+    FEE DESC,
+    C.CAR_TYPE ASC,
+    C.CAR_ID DESC;
